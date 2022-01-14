@@ -5,10 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TopmostTimer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="265" Width="484">
-    <Grid>
-        <Label x:Name="CurrentTime" Content="00:00" FontSize="92" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="StartButton" Content="Start" FontSize="32" HorizontalAlignment="Center" Margin="0,137,0,0" VerticalAlignment="Top" Height="56" Width="114" Click="StartButton_Click" RenderTransformOrigin="0.503,-0.242"/>
-
-    </Grid>
+        Title="Topmost Timer" Height="173" Width="530"
+        Background="Transparent"  
+        WindowStyle="None"
+        AllowsTransparency="True" 
+        Topmost="True" 
+        MouseLeftButtonDown="DragWindow"
+        ResizeMode="CanResizeWithGrip"
+        >
+    <Window.Resources>
+        <Style x:Key="{x:Type Button}" TargetType="Button">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="False" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Margin" Value="5,5,5,5" />
+        </Style>
+        <Style x:Key="{x:Type RadioButton}" TargetType="{x:Type RadioButton}">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid x:Name="BackGrid" Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" FontSize="{Binding FontSize, RelativeSource={RelativeSource TemplatedParent}}" Foreground="Black" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" TargetName="BackGrid" Value="Silver" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Border BorderThickness="1" BorderBrush="Silver" CornerRadius="15,15,15,15" Background="#e0ffffff">
+        <Viewbox Stretch="Uniform" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="7*" />
+                    <RowDefinition Height="3*" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical">
+                    <RadioButton Content="⏱" FontSize="24" ToolTip="Timer" IsChecked="True" />
+                    <RadioButton Content="⏳" FontSize="24" ToolTip="Count Down Clock"/>
+                </StackPanel>
+                <Label Grid.Column="1" Grid.Row="0" x:Name="CurrentTime" Content="00:00:00.00" FontSize="92" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Button x:Name="StartPauseButton" Content="⏯︎" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Click="StartPauseButton_Click" ToolTip="Start/Pause" />
+                    <Button x:Name="StopButton" Content="⏹︎" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Click="StopButton_Click" ToolTip="Stop" />
+                    <Button x:Name="TargetButton" Content="🎯" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Click="TargetButton_Click" ToolTip="Set target time" />
+                    <Button x:Name="ExitButton" Content="➡" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ExitButton_Click" ToolTip="Exit" />
+                </StackPanel>
+            </Grid>
+        </Viewbox>
+    </Border>
 </Window>
