@@ -1,0 +1,14 @@
+﻿<Window x:Class="TopmostTimer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TopmostTimer"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="265" Width="484">
+    <Grid>
+        <Label x:Name="CurrentTime" Content="00:00" FontSize="92" HorizontalAlignment="Left" Margin="142,0,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="StartButton" Content="Start" FontSize="32" HorizontalAlignment="Center" Margin="0,137,0,0" VerticalAlignment="Top" Height="56" Width="114" Click="StartButton_Click" RenderTransformOrigin="0.503,-0.242"/>
+
+    </Grid>
+</Window>
