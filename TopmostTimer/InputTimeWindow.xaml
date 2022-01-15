@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TopmostTimer"
         mc:Ignorable="d"
-        Title="Input Seconds" Height="221" Width="596">
+        Title="Input Target Time" Height="185" Width="439">
     <Grid>
-        <TextBox x:Name="TextSeconds" PreviewTextInput="TypeNumericValidation" DataObject.Pasting="PasteNumericValidation" HorizontalAlignment="Left" Margin="104,64,0,0" TextWrapping="Wrap" Text="60" VerticalAlignment="Top" Width="397"/>
-        <Button Content="OK" HorizontalAlignment="Left" Margin="215,124,0,0" VerticalAlignment="Top" Width="212" Click="Button_Click"/>
+        <TextBox x:Name="TextSeconds" FontSize="12" PreviewTextInput="TypeNumericValidation" DataObject.Pasting="PasteNumericValidation" HorizontalAlignment="Left" Margin="104,64,0,0" TextWrapping="NoWrap" Text="60" VerticalAlignment="Top" Width="217"/>
+        <Button Content="OK" HorizontalAlignment="Left" Margin="104,103,0,0" VerticalAlignment="Top" Width="212" Click="Button_Click"/>
+        <Label Content="Seconds" HorizontalAlignment="Left" Margin="333,60,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.009,0.339"/>
 
     </Grid>
 </Window>

@@ -55,8 +55,8 @@
                     <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical">
-                    <RadioButton Content="⏱" FontSize="24" ToolTip="Timer" IsChecked="True" />
-                    <RadioButton Content="⏳" FontSize="24" ToolTip="Count Down Clock"/>
+                    <RadioButton x:Name="TimerButton" Content="⏱" FontSize="24" ToolTip="Timer" IsChecked="True" Checked="TimerButton_Checked" />
+                    <RadioButton x:Name="CountDownButton" Content="⏳" FontSize="24" ToolTip="Count Down Clock" Checked="CountDownButton_Checked"/>
                 </StackPanel>
                 <Label Grid.Column="1" Grid.Row="0" x:Name="CurrentTime" Content="00:00:00.00" FontSize="92" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">

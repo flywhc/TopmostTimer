@@ -27,16 +27,13 @@ namespace TopmostTimer
         private DateTime startTime;
         private TimeSpan baseTimeDiff = new(0);
         private bool isRunning = false;
-        private double _aspectRatio;
+        private readonly double _aspectRatio;
         private SizeChangedInfo? _sizeInfo;
-
-        private TimeSpan TargetTime = new TimeSpan(60*10000*1000);
+        private TimeSpan TargetTime = new(60*10000*1000);
 
         public MainWindow()
         {
-            InitializeComponent();
             Topmost = true;
-
             // 保持窗口宽高比例，当窗口尺寸改变后延迟0.1秒纠正窗口比例
             _aspectRatio = Width / Height;
             resizeTimer = new DispatcherTimer();
@@ -47,6 +44,8 @@ namespace TopmostTimer
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(10000); // 1ms
             timer.Tick += Timer_Tick;
+
+            InitializeComponent();
         }
 
         // 纠正窗口比例
@@ -82,16 +81,37 @@ namespace TopmostTimer
         {
             TimeSpan diff = DateTime.Now - startTime;
             diff += baseTimeDiff;
-            CurrentTime.Content = string.Format("{0:00}:{1:00}:{2:00}.{3:00}", diff.TotalHours, diff.Minutes, diff.Seconds, diff.Milliseconds / 10);
 
-            if (diff > TargetTime)
+            if (IsCountDown)
             {
-                CurrentTime.Foreground = Brushes.Red;
+                var remainingTime = TargetTime - diff;
+                CurrentTime.Content = TimeSpanToString(remainingTime);
+                if (remainingTime.Ticks < 0)
+                {
+                    CurrentTime.Foreground = Brushes.Red;
+                }
+                else
+                {
+                    CurrentTime.Foreground = Brushes.Black;
+                }
             }
             else
             {
-                CurrentTime.Foreground = Brushes.Black;
+                CurrentTime.Content = TimeSpanToString(diff);
+                if (diff > TargetTime)
+                {
+                    CurrentTime.Foreground = Brushes.Red;
+                }
+                else
+                {
+                    CurrentTime.Foreground = Brushes.Black;
+                }
             }
+        }
+
+        private static string TimeSpanToString(TimeSpan time)
+        {
+            return string.Format("{0:00}:{1:00}:{2:00}.{3:00}", time.TotalHours, Math.Abs(time.Minutes), Math.Abs(time.Seconds), Math.Abs(time.Milliseconds / 10));
         }
 
         private void StartPauseButton_Click(object sender, RoutedEventArgs e)
@@ -115,7 +135,14 @@ namespace TopmostTimer
             baseTimeDiff = new(0);
             timer.Stop();
             isRunning = false;
-            CurrentTime.Content = "00:00:00.00";
+            if (IsCountDown)
+            {
+                CurrentTime.Content = TimeSpanToString(TargetTime);
+            }
+            else
+            {
+                CurrentTime.Content = "00:00:00.00";
+            }
             CurrentTime.Foreground = Brushes.Black;
         }
 
@@ -131,6 +158,23 @@ namespace TopmostTimer
             inputWindow.ShowDialog();
             TargetTime = inputWindow.InputTime;
             Topmost = true;
+
+            StopButton_Click(sender, e);
+        }
+
+        private bool IsCountDown => CountDownButton==null? false: CountDownButton.IsChecked != null && CountDownButton.IsChecked== true;
+
+        private void CountDownButton_Checked(object sender, RoutedEventArgs e)
+        {
+            StopButton_Click(sender,e);
+        }
+
+        private void TimerButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (CurrentTime != null)
+            {
+                StopButton_Click(sender, e);
+            }
         }
     }
 }
